@@ -71,10 +71,18 @@
     				</div>
     			</div>		
     			<label class="mt-2 text-dark font-weight-bold w-100">Gender</label>
+<<<<<<< HEAD
     	        <strong class="chek"><input type="radio" name="gender" value="male" > Male 
     		    <input type="radio" name="gender" class="ml-5" value="male"> Female </strong><br>
     		    <strong class="chek"><input type="checkbox" name="i_agree" class="mt-3" id="remember"> Remeber me <a href="#">Term & Conditions</a></strong><br>
     		    <a href="#"><button class="btn mt-1">Sign up</button></a>
+=======
+    	        <strong><input type="radio" name="gender" value="male" > Male 
+    		    <input type="radio" name="gender" value="female" class="ml-5"> Female </strong><br>
+    		    <strong><input type="checkbox" name="remember" class="mt-3" id="remember"> Remeber me <a href="#">Term & Conditions</a></strong><br>
+                <span class="error" id="rememberError"></span><br>
+    		    <a href="#"><button class="btn mt-3">Sign up</button></a>
+>>>>>>> a0d18678cb76539707b41394d8d35f936b6fd656
     		</form>
     	</div>
     	<div class="col-md-1">&nbsp;</div>
