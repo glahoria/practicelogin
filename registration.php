@@ -1,11 +1,9 @@
-<?php
-echo "<pre>"; print_r($_GET) ; echo "</pre>";
-echo "<pre>"; print_r($_POST) ; echo "</pre>";
-echo "<pre>"; print_r($_REQUEST) ; echo "</pre>";
- if(!empty($_POST['email'])){
-	// echo "<pre>"; print_r($_POST) ; echo "</pre>";
-	 die;
-}
+
+<?php 
+     if (!empty($_REQUEST['email'])) {
+     	echo "<pre>"; print_r($_REQUEST); echo "<pre>";
+     }
+     die;
 ?>
 <!DOCTYPE html>
 <html>
@@ -22,9 +20,8 @@ echo "<pre>"; print_r($_REQUEST) ; echo "</pre>";
     	body {background: #f3f3f3;}
     	h1 {text-shadow: 0 10px 15px rgba(0,0,0,0.3);}
     	label {text-shadow: 0 10px 15px rgba(0,0,0,0.3); font-size: 25px;}
-    	.day,.month,.year  {height: 30px}
     	.btn{width: 30%;background: linear-gradient(#67ae55, #578843); }
-        .error{color:red !important;}
+        .error{color:red !important; font-size: 15px;}
     </style>
 </head>
 <body>
@@ -32,58 +29,52 @@ echo "<pre>"; print_r($_REQUEST) ; echo "</pre>";
     	<div class="col-md-1">&nbsp;</div>
     	<div class="col-md-5">&nbsp;</div>
     	<div class="col-md-5">
-    		<form action="" method="post" id="registrationForm">
+    		<form action="registration.php" method="post" id="registrationForm">
     			<h1>Create an account</h1>
     			<div class="row mt-5 ">
     			    <div class="col-md-6">
-    			        <input type="text" name="first_name" placeholder="Firstname..." class="form-control" id="firstName">
-                        <span class="error" id="firstNameError"></span>
+    			        <input type="text" name="first_name" placeholder="Firstname..." minlength="3" class="form-control" id="firstName">
+                        
     			    </div>
     			    <div class="col-md-6">
-    			        <input type="text" name="last_name" placeholder="Lastname..." class="form-control" id="lastName">
-                        <span class="error" id="lastNameError"></span>
+    			        <input type="text" name="last_name" placeholder="Lastname..." minlength="3" class="form-control" id="lastName">
     			    </div>
     			</div>
     			<input type="text" name="email" placeholder="Email..." class="form-control mt-2" id="email">
-                <span class="error" id="emailError"></span>
-    			<input type="password" name="password" placeholder="Password..." class="form-control mt-2" id="password">
-                <span class="error" id="passwordError"></span>
+    			<input type="password" name="password" placeholder="Password..." minlength="10" class="form-control mt-2" id="password">
     			<input type="password" name="confirm_password" placeholder="Confirm-Password..." class="form-control mt-2" id="confirmPassword">
-                <span class="error" id="confirmPasswordError"></span>
-    			<input type="text" name="phone" placeholder="Phone..." class="form-control mt-2"
+    			<input type="text" name="phone" placeholder="Phone..."maxlength="10" class="form-control mt-2"
                 id="phone">
                 <span class="error" id="phoneError"></span>
     			<label class="mt-2 text-dark font-weight-bold w-100">Birthday</label>
-    			<div class="row">
-    				<div class="col-md-3">
-    					<select id="selectDay" name="select_day" class="form-control day" id="selectDay">
+    			<div class="row ">
+    				<div class="col-md-4">
+    					<select id="selectDay" name="birth"  class="form-control " id="selectDay">
     						<option value="1">1</option>
     						<option value="2">2</option>
     						<option value="3">3</option>
     					</select>
     				</div>		
-    				<div class="col-md-3">
-    					<select id="selectMonth" name="select_month" class="form-control month" id="selectMonth">
+    				<div class="col-md-4">
+    					<select id="selectMonth" name="birth" class="form-control " id="selectMonth">
     						<option value="10">10</option>
     						<option value="11">11</option>
     						<option value="12">12</option>
     					</select>
     				</div>	
-    				<div class="col-md-3">
-    					<select id="selectYear" name="select_year" class="form-control year" id="selectYear">
+    				<div class="col-md-4">
+    					<select id="selectYear" name="birth" class="form-control " id="selectYear">
     						<option value="1994">1994</option>
     						<option value="1995">1995</option>
     						<option value="1996">1996</option>
     					</select>
     				</div>
-    				<div class="col-md-3">&nbsp;</div>
     			</div>		
     			<label class="mt-2 text-dark font-weight-bold w-100">Gender</label>
-    	        <strong><input type="radio" name="male" > Male 
-    		    <input type="radio" name="female" class="ml-5"> Female </strong><br>
-    		    <strong><input type="checkbox" name="remember" class="mt-3" id="remember"> Remeber me <a href="#">Term & Conditions</a></strong><br>
-                <span class="error" id="rememberError"></span><br>
-    		    <a href="#"><button class="btn mt-3">Sign up</button></a>
+    	        <strong class="chek"><input type="radio" name="gender" value="male" > Male 
+    		    <input type="radio" name="gender" class="ml-5" value="male"> Female </strong><br>
+    		    <strong class="chek"><input type="checkbox" name="i_agree" class="mt-3" id="remember"> Remeber me <a href="#">Term & Conditions</a></strong><br>
+    		    <a href="#"><button class="btn mt-1">Sign up</button></a>
     		</form>
     	</div>
     	<div class="col-md-1">&nbsp;</div>
@@ -91,62 +82,64 @@ echo "<pre>"; print_r($_REQUEST) ; echo "</pre>";
 </body>
 <script>
     $(function(){
-       $('#registrationForm').submit(function(e){
-                   e.preventDefault();
-                   var error = false;
-                   var remember = $('input[type="checkbox"]:checked');
-                   var PassWord = $('#password').val();
-                   var confirmPassword = $('#confirmPassword').val();
-                   if($('#firstName').val().length <= 0){
-                       error = true;
-                       $('#firstNameError').html("Please enter first name.");
-                    } else {
-                        $('#firstNameError').html("");
-                    }
-                   if($('#lastName').val().length <= 0){
-                       error = true;
-                       $('#lastNameError').html("Please enter last name.");
-                    } else {
-                        $('#lastNameError').html("");
-                    }   
-                   if ($('#email').val().length <= 0){
-                       error = true;
-                       $('#emailError').html("Please enter email.");
-                    } else {
-                        $('#emailError').html("");
-                    } 
-                    if ($('#phone').val().length <= 0) {
-                        error = true;
-                        $('#phoneError').html("please enter phone number");
-                    }else if ($('#phone').val().length > 10) {
-                        error = true;
-                        $('#phoneError').html("please enter only 10 element");
-                    }else{
-                        $('#phoneError').html("");
-                    }     
-                    if( $('#password').val().length <= 0 ){
-                       error = true;
-                       $('#passwordError').html("Please enter password.");
-                    }else {
-                        $('#passwordError').html("");
-                    }               
-                    if( confirmPassword.length <= 0  ){
-                         error = true;
-                         $('#confirmPasswordError').html("Please enter password ");
-                    }else if (confirmPassword != PassWord){
-                          error = true;
-                        $('#confirmPasswordError').html(" password does not match");
-                    }else {
-                        $('#confirmPasswordError').html("");
-                       }
-                    if (remember.length <= 0) {
-                        error = true;
-                        $('#rememberError').html("please select aggree.");
-                    }else{
-                        $('#rememberError').html("");
-                    }     
-                });
-        
-        });            
+            $('#registrationForm').validate({
+            	rules:{
+            		first_name:{
+            			required:true,
+                        minlength:3       
+            		},
+            		last_name:{
+            			required:true,
+                        minlength:3       
+            		},
+            		email:{
+            			required:true,
+                        email:true       
+            		},
+            		password:{
+            			required:true,       
+            		},
+            		confirm_password:{
+            			required:true,
+            			equalTo:password
+            		},
+            		phone:{
+            			required:true,
+            			maxlength:10
+            		},
+            		gender:{
+            			required:true,	
+            		},
+            		i_agree:{
+            			required:true,
+            		},
+            	},
+            	messages:{
+            	    first_name:{
+            			required:"please enter first name.",       
+            		},
+            		last_name:{
+            			required:"please enter last name.",       
+            		},
+            		email:{
+            			required:"please enter valid email.",      
+            		},
+            		password:{
+            			required:"please enter password.",       
+            		},
+            		confirm_password:{
+            			required:"please enter confirm password.",
+            			equalTo:"password does not match."
+            		},
+            		gender:{
+            			required:"please select gender.",	
+            		},
+            		i_agree:{
+            			required:"please select i agree.",
+            		},
+                },	
+            });            
+        });
+
 </script>
 </html>
