@@ -1,9 +1,17 @@
-
 <?php 
-     if (!empty($_REQUEST['email'])) {
-     	echo "<pre>"; print_r($_REQUEST); echo "<pre>";
+	function pr($a) { echo "<pre>"; print_r($a); echo "</pre>"; }
+    if (!empty($_REQUEST['email'])) {
+			 $conn = new mysqli("localhost", "root", "gurunanak", "gurjeet");
+			if ($conn->connect_error) {
+				die("Connection failed: " . $conn->connect_error);
+			}
+			$query = "INSERT INTO users (first_name, last_name, email, password, phone, sex, dob, i_agree, status, created, modified) VALUES ('".$_REQUEST['first_name']."','".$_REQUEST['last_name']."','".$_REQUEST['email']."', '".$_REQUEST['password']."', '".$_REQUEST['phone']."', '".$_REQUEST['gender']."','".date('Y-m-d', strtotime($_REQUEST['birth_day']."-".$_REQUEST['birth_month']."-".$_REQUEST['birth_year']))."', 1, 1, '".date('Y-m-d H:g:s')."', '".date('Y-m-d H:g:s')."'  )" ;
+			mysqli_query($conn, $query );
+			mysqli_close($conn);
+			
+			die;
      }
-     die;
+     
 ?>
 <!DOCTYPE html>
 <html>
@@ -49,21 +57,21 @@
     			<label class="mt-2 text-dark font-weight-bold w-100">Birthday</label>
     			<div class="row ">
     				<div class="col-md-4">
-    					<select id="selectDay" name="birth"  class="form-control " id="selectDay">
+    					<select id="selectDay" name="birth_day"  class="form-control " id="selectDay">
     						<option value="1">1</option>
     						<option value="2">2</option>
     						<option value="3">3</option>
     					</select>
     				</div>		
     				<div class="col-md-4">
-    					<select id="selectMonth" name="birth" class="form-control " id="selectMonth">
+    					<select id="selectMonth" name="birth_month" class="form-control " id="selectMonth">
     						<option value="10">10</option>
     						<option value="11">11</option>
     						<option value="12">12</option>
     					</select>
     				</div>	
     				<div class="col-md-4">
-    					<select id="selectYear" name="birth" class="form-control " id="selectYear">
+    					<select id="selectYear" name="birth_year" class="form-control " id="selectYear">
     						<option value="1994">1994</option>
     						<option value="1995">1995</option>
     						<option value="1996">1996</option>
@@ -71,18 +79,14 @@
     				</div>
     			</div>		
     			<label class="mt-2 text-dark font-weight-bold w-100">Gender</label>
-<<<<<<< HEAD
-    	        <strong class="chek"><input type="radio" name="gender" value="male" > Male 
-    		    <input type="radio" name="gender" class="ml-5" value="male"> Female </strong><br>
-    		    <strong class="chek"><input type="checkbox" name="i_agree" class="mt-3" id="remember"> Remeber me <a href="#">Term & Conditions</a></strong><br>
-    		    <a href="#"><button class="btn mt-1">Sign up</button></a>
-=======
     	        <strong><input type="radio" name="gender" value="male" > Male 
-    		    <input type="radio" name="gender" value="female" class="ml-5"> Female </strong><br>
+    		    <input type="radio" name="gender" value="female" class="ml-5"> Female </strong>
+				<br>
+				<label id="gender-error" class="error" for="gender" style="display:none">please select gender.</label> <br />
+
     		    <strong><input type="checkbox" name="remember" class="mt-3" id="remember"> Remeber me <a href="#">Term & Conditions</a></strong><br>
                 <span class="error" id="rememberError"></span><br>
     		    <a href="#"><button class="btn mt-3">Sign up</button></a>
->>>>>>> a0d18678cb76539707b41394d8d35f936b6fd656
     		</form>
     	</div>
     	<div class="col-md-1">&nbsp;</div>

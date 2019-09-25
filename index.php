@@ -4,6 +4,7 @@
 	<title></title>
 </head>
 <body>
-
+<a href="login.php">Login</a>
+<a href="registration.php">Regiter</a>
 </body>
 </html>
