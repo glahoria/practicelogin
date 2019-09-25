@@ -70,8 +70,8 @@
     				<div class="col-md-3">&nbsp;</div>
     			</div>		
     			<label class="mt-2 text-dark font-weight-bold w-100">Gender</label>
-    	        <strong><input type="radio" name="male" > Male 
-    		    <input type="radio" name="female" class="ml-5"> Female </strong><br>
+    	        <strong><input type="radio" name="gender" value="male" > Male 
+    		    <input type="radio" name="gender" value="female" class="ml-5"> Female </strong><br>
     		    <strong><input type="checkbox" name="remember" class="mt-3" id="remember"> Remeber me <a href="#">Term & Conditions</a></strong><br>
                 <span class="error" id="rememberError"></span><br>
     		    <a href="#"><button class="btn mt-3">Sign up</button></a>
