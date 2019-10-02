@@ -1,4 +1,4 @@
-
+<?php include "connection.php"; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,8 +28,7 @@
     				<th>Action</th>
     			</tr>
 <?php
-include "connection.php";
-    $query = "SELECT * FROM `accounts`" ;
+    $query = "SELECT * FROM `users`" ;
     $insert = mysqli_query($conn, $query );
     $id = 1;
     while ($result = mysqli_fetch_array($insert)) {                
@@ -41,8 +40,8 @@ include "connection.php";
     				<td><?php echo $result['email']; ?></td>
     				<td><?php echo $result['password']; ?></td>
     				<td><?php echo $result['phone']; ?></td>
-    				<td><?php echo $result['date_of_birth']; ?></td>
-    				<td><?php echo $result['gender']; ?></td>
+    				<td><?php echo $result['dob']; ?></td>
+    				<td><?php echo $result['sex']; ?></td>
     				<td><button class="btn btn-danger">delete</button>
                         <button class="btn btn-primary">update</button>
     				</td>
