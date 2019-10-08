@@ -1,4 +1,36 @@
 <?php include "connection.php"; ?>
+<?php
+	//parse_str($_SERVER['QUERY_STRING'], $queries); 
+	
+	$_GET['sort_order'] =  empty($_GET['sort_order']) ? "asc" : (($_GET['sort_order'] == "asc") ? "desc" : "asc");  
+
+	$query = "SELECT * FROM `users`" ;
+	
+	if(!empty($_GET['key'])){
+			$searchInFrileds = ['first_name','last_name','email','phone'];
+			$whereArray = [];
+			foreach($searchInFrileds as $searchInFriled){
+				//$whereArray[] = $searchInFriled." LIKE '%".$_GET['key']."%'";
+				$whereArray[] = $searchInFriled." = '".$_GET['key']."'";
+			}
+			
+			$query = $query. " WHERE " . implode(" OR ", $whereArray);
+				
+	} 
+	
+	if(!empty($_GET['sort_by'])){
+			$query = $query. " ORDER BY " . $_GET['sort_by']." " .$_GET['sort_order'];
+	} 
+	
+	pr($query);
+	
+	unset($_GET['sort_by']);
+	
+	$url = $_SERVER['PHP_SELF']."?".http_build_query($_GET)."&sort_by=";
+    $insert = mysqli_query($conn, $query );
+    $i = 1;
+?>
+
 
 <!DOCTYPE html>
 <html>
@@ -19,36 +51,19 @@
     <div class="raw mt-5">
         <div class="col-md-12 m-auto">
             <h1 class="text-dark text-center">Display data</h1>
+            <form action="">
+				<input type="text" name="key" id="searchKey" class="form-control" placeholder="Search...">
+            </form>
             <table class="table table-striped table-hover table-bordered">
                 <tr class="text-center bg-dark text-white sort">
                     <th>Sr No.</th>
-                    <th data-id="first_name">First Name</th>
-                    <th data-id="last_name">Last Name</th>
+                    <th><a href="<?= $url; ?>first_name">First Name</a></th>
+                    <th><a href="<?= $url; ?>last_name">Last Name</a></th>
                     <th>Email</th>
                     <th>Phone</th>
                     <th>Action</th>
                 </tr>
-<?php
-	$query = "SELECT * FROM `users`" ;
-	if(!empty($_GET['sort_by'])){
-			$order = $_GET['sort_by'];
-			if(empty($_GET['sort_order'])){
-				$order = $order." asc";
-			} else {
-				$order = $order." " .$_GET['sort_order'];
-			}
-			
-			//pr($order); die;
-			
-			$query = $query. " ORDER BY " .$order;
-	}
-	
-	pr($query);
-    
-    $insert = mysqli_query($conn, $query );
-    $i = 1;
-    while ($result = mysqli_fetch_array($insert)) {                
-?>
+		<?php  while ($result = mysqli_fetch_array($insert)) { ?>
     	        <tr class="text-center">
                     <td><?php echo $i; ?></td>
                     <td><?php echo $result['first_name']; ?></td>
@@ -69,7 +84,6 @@
     </div>
 
 <script>
-var sortOrder = "<?= empty($_GET['sort_order']) ? "asc" : (($_GET['sort_order'] == "asc") ? "desc" : "asc");  ?>";	
 $(function() {
 	$(".delete").click(function(){
 		var id = $(this).attr("id");
@@ -87,9 +101,6 @@ $(function() {
 		return false;
 	});
 	
-	$('.sort th').click(function(e){
-		window.location.href =  window.location.href.split("?")[0] + "?sort_by="+$(this).attr('data-id')+"&sort_order="+sortOrder
-	});
 });
 </script>
 </body>
