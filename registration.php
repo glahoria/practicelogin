@@ -12,9 +12,10 @@
         $created = date('Y-m-d H:i:s');
         $modified = date('Y-m-d H:i:s');
         
-        $query = "INSERT INTO accounts (first_name,last_name,email,password,phone,date_of_birth,gender,i_agree,created,modified) VALUES ('$first','$last','$email','$password','$phone','$birth_date','$gender','$iAgree','$created','$modified')" ;
+        $query = "INSERT INTO users (first_name,last_name,email,password,phone,date_of_birth,gender,i_agree,created,modified) VALUES ('$first','$last','$email','$password','$phone','$birth_date','$gender','$iAgree','$created','$modified')" ;
         $insert = mysqli_query($conn, $query );
         mysqli_close($conn);
+        pr($insert);
     }
 ?>
 <!DOCTYPE html>
@@ -62,26 +63,33 @@
                 <div class="row ">
                     <div class="col-md-4">
                         <select id="selectDay" name="birth_day"   class="form-control " id="selectDay">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
+                            <?php 
+                            $day = range(1,31);
+                            foreach ($day as $i) { ?>
+                             <option value="<?php echo $i; ?>"><?php echo $i; ?></option>   
+                            <?php  } ?>
+                            
                         </select>
                     </div>      
                     <div class="col-md-4"> 
                         <select id="selectMonth" name="birth_month" class="form-control " id="selectMonth">
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
+                            <?php 
+                            $month = range(1,12);
+                            foreach ($month as $i) { ?>
+                             <option value="<?php echo $i; ?>"><?php echo $i; ?></option>   
+                            <?php  } ?>
                         </select>
                     </div>  
                     <div class="col-md-4">
                         <select id="selectYear" name="birth_year" class="form-control " id="selectYear">
-                            <option value="1994">1994</option>
-                            <option value="1995">1995</option>
-                            <option value="1996">1996</option>
+                            <?php 
+                            $year = range(1900,2001);
+                            foreach ($year as $i) { ?>
+                             <option value="<?php echo $i; ?>"><?php echo $i; ?></option>   
+                            <?php  } ?>
                         </select>
                     </div>
-                </div>      
+                </div>         
                 <label class="mt-2 text-dark font-weight-bold w-100">Gender</label>
                 <strong><input type="radio" name="gender" value="male" > Male 
                 <input type="radio" name="gender" value="female" class="ml-5"> Female </strong>
