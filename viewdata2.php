@@ -1,7 +1,6 @@
 <?php include "connection.php"; ?>
 <?php
-<<<<<<< HEAD
-    $query = "SELECT * FROM `accounts`" ;
+    $query = "SELECT * FROM `users`" ;
     
     $key = "";
     if(!empty($_REQUEST['key'])){
@@ -11,38 +10,15 @@
             foreach($searchInFields as $searchInField){
                 $whereArray[] = $searchInField." LIKE '%".$key."%'";
                 //$whereArray[] = $searchInFriled." = '".$_GET['key']."'";
-            }
+            } 
             
             $query = $query. " WHERE " . implode(" OR ", $whereArray);
             $_GET['key'] = $key;
                 
-    } 
-    
+    }
     
     $exe = mysqli_query($conn, $query );
     $limit = 5;
-=======
-	$query = "SELECT * FROM `users`" ;
-	
-	$key = "";
-	if(!empty($_REQUEST['key'])){
-			$key = $_REQUEST['key'];
-			$searchInFields = ['first_name','last_name','email','phone'];
-			$whereArray = [];
-			foreach($searchInFields as $searchInField){
-				$whereArray[] = $searchInField." LIKE '%".$key."%'";
-				//$whereArray[] = $searchInFriled." = '".$_GET['key']."'";
-			}
-			
-			$query = $query. " WHERE " . implode(" OR ", $whereArray);
-			$_GET['key'] = $key;
-				
-	} 
-	
-	
-    $exe = mysqli_query($conn, $query );
-    $limit = 2;
->>>>>>> 5d0307e6d23d3137626fae98c832e69bff46b46e
     $rows = mysqli_num_rows($exe);
     $pages = ceil($rows/$limit);
     $page = isset($_GET['page']) ?  $_GET['page'] : 1;
@@ -50,20 +26,6 @@
     $Previous = $page-1 ;
     $Next = $page+1 ;
     $i = 1;
-	
-	$_GET['sort_order'] =  empty($_GET['sort_order']) ? "asc" : (($_GET['sort_order'] == "asc") ? "desc" : "asc");  
-	
-	if(!empty($_GET['sort_by'])){
-			$query = $query. " ORDER BY " . $_GET['sort_by']." " .$_GET['sort_order'];
-	} 
-	
-	unset($_GET['sort_by']);
-	
-	$query = $query. " LIMIT ".$offset.",".$limit;
-	
-	$exe = mysqli_query($conn, $query );
-	
-	$url = $_SERVER['PHP_SELF']."?".http_build_query($_GET)."&page=PAGE&sort_by=";
     
     $_GET['sort_order'] =  empty($_GET['sort_order']) ? "asc" : (($_GET['sort_order'] == "asc") ? "desc" : "asc");  
     
@@ -93,13 +55,8 @@
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
     <style>
-<<<<<<< HEAD
         .sort th {cursor:pointer;}
-        .active a{color:red !important;}
-=======
-		.sort th {cursor:pointer;}
-		.active a{color:red !important;}
->>>>>>> 5d0307e6d23d3137626fae98c832e69bff46b46e
+        .active a{background:#4078F5 !important; color: white}
     </style>
 </head>
 <body>
@@ -112,11 +69,7 @@
             
             <div class="col-md-4 float-right my-3">
             <form action="viewdata2.php?page=<?= $page; ?>" method="post">
-<<<<<<< HEAD
                 <input type="text" name="key" id="searchKey" class="form-control-sm form-control" value="<?= $key; ?>" placeholder="Search...">
-=======
-				<input type="text" name="key" id="searchKey" class="form-control-sm form-control" value="<?= $key; ?>" placeholder="Search...">
->>>>>>> 5d0307e6d23d3137626fae98c832e69bff46b46e
             </form>
             </div>
             </div>
@@ -129,15 +82,9 @@
                     <th><a class="text-white" href="<?= str_replace("PAGE", $page, $url); ?>phone">Phone</a></th>
                     <th>Action</th>
                 </tr>
-<<<<<<< HEAD
          
                 <?php   while ($result = mysqli_fetch_array($exe)) { ?>
                 <tr class="text-center">
-=======
-		 
-	        	<?php	while ($result = mysqli_fetch_array($exe)) { ?>
-    	        <tr class="text-center">
->>>>>>> 5d0307e6d23d3137626fae98c832e69bff46b46e
                     <td><?php echo $i; ?></td>
                     <td><?php echo $result['first_name']; ?></td>
                     <td><?php echo $result['last_name']; ?></td>
@@ -155,7 +102,6 @@
             </table>
         </div>
     <div class="col-md-6 float-right">
-<<<<<<< HEAD
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <?php if ($page > 1) { ?>
@@ -165,17 +111,6 @@
                     <li <?php if($page == $i) { ?>class="active" <?php } ?>><a  class="page-link" href="<?= str_replace("PAGE", $i  , $url); ?>"><?= $i; ?></a></li>     
                 <?php endfor; ?>
                 <?php if ($page != $pages) { ?>
-=======
-    	<nav aria-label="Page navigation example">
-    	    <ul class="pagination">
-    	    	<?php if ($page > 1) { ?>
-                <li class="page-item"><a class="page-link" href="<?= str_replace("PAGE", $Previous, $url); ?>" aria-label="Previous">&laquo; Previous</a></li>
-                <?php } ?>
-                <?php for($i = 1; $i <= $pages; $i++) : ?>
-                    <li <?php if($page == $i) { ?>class="active" <?php } ?>><a  class="page-link" href="<?= str_replace("PAGE", $i	, $url); ?>"><?= $i; ?></a></li>     
-		        <?php endfor; ?>
-		        <?php if ($page != $pages) { ?>
->>>>>>> 5d0307e6d23d3137626fae98c832e69bff46b46e
                 <li class="page-item"><a class="page-link" href="<?= str_replace("PAGE", $Next, $url); ?>" aria-label="Next">Next &raquo;</a></li>
                 <?php } ?>
             </ul>
@@ -184,7 +119,6 @@
     
 <script>
 $(function() {
-<<<<<<< HEAD
     $(".delete").click(function(){
         var id = $(this).attr("id");
         if(confirm("Are you sure you want to delete this?")) {
@@ -199,22 +133,6 @@ $(function() {
          }
         return false;
     });
-=======
-	$(".delete").click(function(){
-		var id = $(this).attr("id");
-		if(confirm("Are you sure you want to delete this?")) {
-		 $.ajax({
-			   type: "POST",
-			   url: "delete.php",
-			   data: {idDelete:id},
-			   success: function(data){
-				}
-			});
-			$(this).parents('tr').hide(); 
-		 }
-		return false;
-	});
->>>>>>> 5d0307e6d23d3137626fae98c832e69bff46b46e
 });
 </script>
 </body>
